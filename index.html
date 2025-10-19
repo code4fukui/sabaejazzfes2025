@@ -1,15 +1,130 @@
-<script type="module" src="https://code4sabae.github.io/js/csv-viewer.js"></script>
-<csv-viewer src=shops.csv></csv-viewer>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鯖江JAZZフェスティバル2025 飲食店一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b0d8f5;
+            color: #0a1128;
+        }
+        header, footer {
+            background-color: #0a1128; /* メインテキスト色を反転して背景に */
+            color: #ffffff;            /* 白文字でコントラスト */
 
-<style>
-table {
-  border-collapse: collapse;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        footer a {
+          color: white !important;
+        }
+        .shop-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .shop {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            width: calc(33% - 20px);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .shop:hover {
+            transform: translateY(-5px);
+        }
+        .shop img {
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+        }
+        .shop h2 {
+            font-size: 1.2rem;
+            margin: 0.8rem 0;
+        }
+        .shop p {
+            padding: 0 1rem 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        @media (max-width: 768px) {
+            .shop {
+                width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 480px) {
+            .shop {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>鯖江JAZZフェスティバル2025 飲食店一覧</h1>
+</header>
+
+<main class="shop-list" id="main">
+
+<!--
+    <div class="shop">
+        <img src="https://via.placeholder.com/300x200" alt="フェスの画像1">
+        <h2>ショップ1</h2>
+        <p>このショップは多様な商品を取り揃えたフェスティバル会場でも人気のショップです。</p>
+    </div>
+
+    <div class="shop">
+        <img src="https://via.placeholder.com/300x200" alt="フェスの画像2">
+        <h2>ショップ2</h2>
+        <p>お祭り気分を盛り上げるユニークなアイテムが揃ったこのお店を訪ねてみましょう。</p>
+    </div>
+
+    <div class="shop">
+        <img src="https://via.placeholder.com/300x200" alt="フェスの画像3">
+        <h2>ショップ3</h2>
+        <p>地元の特産品を中心に販売している人気のショップです。</p>
+    </div>
+-->
+    
+</main>
+
+<footer>
+DATA: <a href=shops.csv>飲食ブース一覧オープンデータ</a> CC BY <a href=https://sabaejazz.jp/>鯖江JAZZフェスティバル2025</a>
+</footer>
+
+<script type="module">
+import { CSV } from "https://js.sabae.cc/CSV.js";
+import { shuffle } from "https://js.sabae.cc/shuffle.js";
+
+const cr = (tag, parent) => {
+  const c = document.createElement(tag);
+  if (parent) parent.appendChild(c);
+  return c;
+};
+
+const data = await CSV.fetchJSON("./shops.csv");
+shuffle(data);
+for (const item of data) {
+  if (item.type != "飲食ブース") continue;
+  const div = cr("div", main);
+  div.className = "shop";
+  const img = new Image();
+  img.src = item.img;
+  div.appendChild(img);
+  cr("h2", div).textContent = item.title;
+  cr("p", div).textContent = item.description;
 }
-td, th {
-  border: 1px solid black;
-  padding: .3em;
-}
-img {
-  height: 300px;
-}
-</style>
+</script>
+
+</body>
+</html>
