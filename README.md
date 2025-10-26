@@ -4,7 +4,7 @@ https://code4fukui.github.io/sabaejazzfes2025/
 
 ## opendata
 
-https://code4fukui.github.io/sabaejazzfes2025/shops.csv
+- [鯖江JAZZフェスティバル 飲食ブース一覧オープンデータ](shops.csv) CC BY [鯖江JAZZフェスティバル](https://sabaejazz.jp/)
 
 ## how to make
 
